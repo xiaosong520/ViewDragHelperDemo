@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * 垂直方向利用DragHelper，水平方向自行处理触摸事件的示例Activity。
  * 用于解决用一个DraggableView不方便分发给子控件触摸事件的问题。
  */
-public class VideoPlayerActivity extends AppCompatActivity implements DraggableListener {
+public class VideoPlayerActivity extends AppCompatActivity implements DraggableListener, DraggableScrollView.ScrollListener {
 
     private static final String TAG = "VideoPlayerActivity";
     @BindView(R.id.fl_video)
@@ -44,6 +44,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
     private void initView() {
         dragViewVertical.setDraggableListener(this);
         dragViewHor.setDraggableListener(this);
+        scrollView.setOnScrollListener(this);
         //如果是第一项或者最后一项则不能左右切换了。设置false
         dragViewHor.setFirst(false);
         dragViewHor.setLast(false);
@@ -99,6 +100,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
             scrollView.setScaleX(1 - (255.0f - (float) newAlpha) / 255);
             scrollView.setScaleY(1 - (255.0f - (float) newAlpha) / 255);
         }
+    }
+
+    @Override
+    public void isOnTop(boolean isTop) {
+        dragViewVertical.setScrollToTop(isTop);
+    }
+
+    @Override
+    public void onScrollChanged(int tY) {
+
     }
 
     /**

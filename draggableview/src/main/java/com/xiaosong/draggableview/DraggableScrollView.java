@@ -36,12 +36,11 @@ public class DraggableScrollView extends ScrollView {
     }
 
 
-
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent ev) {
         super.onInterceptTouchEvent(ev);//继承父类方法，让它可以实现Scrollview的滑动
 
-        if (isFullScreen){//全屏状态，不滑动ScrollView
+        if (isFullScreen) {//全屏状态，不滑动ScrollView
             return false;
         }
 
@@ -77,13 +76,13 @@ public class DraggableScrollView extends ScrollView {
 
                     if (xMoved) {
                         Log.i(TAG, "mTouchState：水平");
-                        if (mTouchSlop <yDiff){
+                        if (mTouchSlop < yDiff) {
                             mTouchState = TOUCH_STATE_HORIZONTAL_SCROLLING;
                         }
 
-                    }else if (yMoved) {
+                    } else if (yMoved) {
                         Log.i(TAG, "mTouchState：竖直");
-                        if (mTouchSlop <yDiff){
+                        if (mTouchSlop < yDiff) {
                             mTouchState = TOUCH_STATE_VERTICAL_SCROLLING;
                         }
                     }
@@ -109,11 +108,17 @@ public class DraggableScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (t <= 0) {
-            listener.isOnTop(true);
+            if (listener != null) {
+                listener.isOnTop(true);
+            }
         } else {
-            listener.isOnTop(false);
+            if (listener != null) {
+                listener.isOnTop(false);
+            }
         }
-        listener.onScrollChanged(t);
+        if (listener != null) {
+            listener.onScrollChanged(t);
+        }
     }
 
     private boolean isForbidden() {
