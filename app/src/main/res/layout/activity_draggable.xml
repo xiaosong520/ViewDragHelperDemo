@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorTransparent">
 
     <!--竖直拖拽-->
-    <com.xiaosong.draggableview.VerticalDraggableView
-        android:id="@+id/drag_view_vertical"
+    <com.xiaosong.draggableview.DraggableView
+        android:id="@+id/drag_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bg_gauss_blur"
@@ -19,43 +18,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:background="@color/colorPrimary">>
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <!--水平拖拽-->
-                <com.xiaosong.draggableview.HorizontalDraggableView
-                    android:id="@+id/drag_view_hor"
+
+                <!--顶部播放器部分-->
+                <RelativeLayout
+                    android:id="@+id/fl_video"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:visibility="visible">
+                    android:layout_height="300dp"
+                    android:background="@color/colorBlack">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <!--顶部播放器部分-->
-                    <RelativeLayout
-                        android:id="@+id/fl_video"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:background="@color/colorBlack">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="播放器控件" />
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </com.xiaosong.draggableview.HorizontalDraggableView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="播放器控件" />
+                </RelativeLayout>
 
 
                 <TextView
@@ -81,13 +64,13 @@
                     android:layout_height="100dp"
                     android:gravity="center"
                     android:text="底部列表部分" />
-
             </LinearLayout>
 
 
         </com.xiaosong.draggableview.DraggableScrollView>
 
 
-    </com.xiaosong.draggableview.VerticalDraggableView>
+    </com.xiaosong.draggableview.DraggableView>
 
 </RelativeLayout>
+

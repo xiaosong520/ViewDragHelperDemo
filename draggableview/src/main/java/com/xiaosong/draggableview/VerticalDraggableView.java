@@ -15,6 +15,8 @@ import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
 import com.example.xiaosong.draggableview.R;
+import com.xiaosong.draggableview.interfaces.DraggableListener;
+import com.xiaosong.draggableview.interfaces.VerticalDraggableViewCallback;
 
 
 /**
@@ -378,7 +380,7 @@ public class VerticalDraggableView extends LinearLayout {
      *
      * @param top
      */
-    void onViewPositionChanged(int top) {
+    public void onViewPositionChanged(int top) {
         notifyBackgroundChangedListener(top);
     }
 

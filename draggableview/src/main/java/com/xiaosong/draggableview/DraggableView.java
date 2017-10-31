@@ -15,12 +15,14 @@ import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
 import com.example.xiaosong.draggableview.R;
+import com.xiaosong.draggableview.interfaces.DraggableListener;
+import com.xiaosong.draggableview.interfaces.DraggableViewCallback;
 
 
 /**
- * 包含水平和垂直方向的控件。
+ * 包含水平和垂直方向的拖拽控件。
  *
- * @author zengsong
+ * @author xiaosong
  */
 public class DraggableView extends LinearLayout {
 
@@ -219,18 +221,6 @@ public class DraggableView extends LinearLayout {
                 Log.d(TAG, "onTouchEvent,Move_Way:" + Move_Way);
 
                 /**
-                 * 让DragHelper 接管滑动事件（或操作）:
-                 * 1.左右滑动
-                 * 2.在顶部下拉拖拽
-                 */
-             /*   if (isScrollToTop && Move_Way.equals(MOVE_BOTTOM)|| Move_Way.equals(MOVE_LEFT)||Move_Way.equals(MOVE_RIGHT)) {
-                    Log.d(TAG, "分发事件给DragHelper");
-                    viewDragHelper.processTouchEvent(ev);
-                }else {
-                    viewDragHelper.processTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
-                }*/
-
-                /**
                  * 将事件分发给子控件的条件：
                  * 1.没有被关闭
                  * 2.非顶部下滑动
@@ -250,10 +240,6 @@ public class DraggableView extends LinearLayout {
                         viewDragHelper.processTouchEvent(ev);
                         mDragView.dispatchTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
                     } else if (Move_Way.equals(MOVE_LEFT) || Move_Way.equals(MOVE_RIGHT)) {//左右滑动
-                      /*  boolean isHitScrollView = isViewHit(mScrollView, (int) ev.getX(), (int) ev.getY());
-                        if (isHitScrollView) {//点击范围在横向滑动的控件
-                            mDragView.dispatchTouchEvent(ev);
-                        } else {*/
                         if (isNeedInterceptHorizontal) {// 拦截拖拽，让SeekBar拖动
                             Log.d(TAG, "onTouchEvent, 拦截拖拽，让SeekBar拖动");
                             mDragView.dispatchTouchEvent(ev);
@@ -262,7 +248,6 @@ public class DraggableView extends LinearLayout {
                             viewDragHelper.processTouchEvent(ev);
                             mDragView.dispatchTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
                         }
-//                        }
                     } else {
                         Log.d(TAG, "onTouchEvent, 都不符合条件，ACTION_CANCEL");
                         mDragView.dispatchTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
@@ -458,7 +443,7 @@ public class DraggableView extends LinearLayout {
     /**
      * 子控件被拖拽,移动了位置
      */
-    void onViewPositionChanged(int top) {
+    public void onViewPositionChanged(int top) {
         notifyBackgroundChangedListener(top);
     }
 

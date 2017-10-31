@@ -3,6 +3,7 @@ package com.xiaosong.draggableview.demo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 import butterknife.BindView;
@@ -21,11 +22,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
     }
 
-    @OnClick(R.id.btn_start_player)
-    public void onClick() {
-        startActivity(new Intent(MainActivity.this, VideoPlayerActivity.class));
+    @OnClick({R.id.btn_start_draggable, R.id.btn_start_player})
+    public void onClick(View view) {
+        if (view.getId() ==R.id.btn_start_draggable){
+            startActivity(new Intent(MainActivity.this, DraggableActivity.class));
+        }else if (view.getId() ==R.id.btn_start_player){
+            startActivity(new Intent(MainActivity.this, VideoPlayerActivity.class));
+        }
     }
 
 }

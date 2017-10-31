@@ -4,50 +4,39 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.xiaosong.draggableview.DraggableScrollView;
-import com.xiaosong.draggableview.HorizontalDraggableView;
-import com.xiaosong.draggableview.VerticalDraggableView;
+import com.xiaosong.draggableview.DraggableView;
 import com.xiaosong.draggableview.interfaces.DraggableListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+public class DraggableActivity extends AppCompatActivity implements DraggableListener, DraggableScrollView.ScrollListener {
 
-/**
- * 垂直方向利用DragHelper，水平方向自行处理触摸事件的示例Activity。
- * 用于解决用一个DraggableView不方便分发给子控件触摸事件的问题。
- */
-public class VideoPlayerActivity extends AppCompatActivity implements DraggableListener {
-
-    private static final String TAG = "VideoPlayerActivity";
+    private static final String TAG = "DraggableActivity";
     @BindView(R.id.fl_video)
     RelativeLayout flVideo;
-    @BindView(R.id.drag_view_hor)
-    HorizontalDraggableView dragViewHor;
     @BindView(R.id.scroll_view)
     DraggableScrollView scrollView;
-    @BindView(R.id.drag_view_vertical)
-    VerticalDraggableView dragViewVertical;
+    @BindView(R.id.drag_view)
+    DraggableView dragView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vieo_player);
+        setContentView(R.layout.activity_draggable);
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        dragViewVertical.setDraggableListener(this);
-        dragViewHor.setDraggableListener(this);
-        //如果是第一项或者最后一项则不能左右切换了。设置false
-        dragViewHor.setFirst(false);
-        dragViewHor.setLast(false);
+        dragView.setDraggableListener(this);
+        scrollView.setOnScrollListener(this);
     }
+
 
     @Override
     public void onClosedToBottom() {
@@ -66,7 +55,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
         Toast.makeText(this, "向左滑动", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                dragViewHor.show();
+                dragView.show();
             }
         }, 500);
     }
@@ -76,22 +65,22 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
         Toast.makeText(this, "向左滑动", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                dragViewHor.show();
+                dragView.show();
             }
         }, 500);
     }
 
     @Override
     public void onBackgroundChanged(int top) {
-        int newAlpha = 255 - (int) (255 * ((float) top / (float) flVideo.getRootView().getHeight()));
+        int newAlpha = 255 - (int) (255 * ((float) top / (float) dragView.getRootView().getHeight()));
 
         if (newAlpha == 255) {
-            dragViewVertical.setBackgroundResource(R.mipmap.bg_gauss_blur);
+            dragView.setBackgroundResource(R.mipmap.bg_gauss_blur);
         } else {
-            dragViewVertical.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBackground));
+            dragView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBackground));
         }
 
-        dragViewVertical.getBackground().setAlpha(newAlpha);
+        dragView.getBackground().setAlpha(newAlpha);
         if (newAlpha < 216) { //达到子控件缩放最小值，原大小的0.85倍
             scrollView.setScaleX(0.85f);
             scrollView.setScaleY(0.85f);
@@ -99,6 +88,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
             scrollView.setScaleX(1 - (255.0f - (float) newAlpha) / 255);
             scrollView.setScaleY(1 - (255.0f - (float) newAlpha) / 255);
         }
+    }
+
+    @Override
+    public void isOnTop(boolean isTop) {
+        dragView.setScrollToTop(isTop);
+    }
+
+    @Override
+    public void onScrollChanged(int tY) {
+
     }
 
     /**
@@ -111,4 +110,3 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
         return false;
     }
 }
-

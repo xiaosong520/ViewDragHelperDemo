@@ -1,8 +1,10 @@
-package com.xiaosong.draggableview;
+package com.xiaosong.draggableview.interfaces;
 
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
 import android.view.View;
+
+import com.xiaosong.draggableview.VerticalDraggableView;
 
 
 /**
@@ -10,7 +12,7 @@ import android.view.View;
  *
  * @author xaosong
  */
-class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
+public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
 
     private static final String TAG = "VerticalCallback";
 

@@ -12,11 +12,13 @@ import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 import android.widget.Scroller;
 
+import com.xiaosong.draggableview.interfaces.DraggableListener;
+
 
 /**
- * ViewGroup 使用ViewDragHelper 帮助类进行拖拽动画处理
+ * ViewGroup 自行监听处理拖拽动画
  *
- * @author zengsong
+ * @author xiaosong
  */
 
 public class HorizontalDraggableView extends FrameLayout {

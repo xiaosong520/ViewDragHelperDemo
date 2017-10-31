@@ -1,19 +1,18 @@
-package com.xiaosong.draggableview;
+package com.xiaosong.draggableview.interfaces;
 
-import android.app.Activity;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
 import android.view.View;
 
-
+import com.xiaosong.draggableview.DraggableView;
 
 
 /**
  * ViewDragHelper.Callback 拖拽事件监听回调
  *
- * @author zengsong
+ * @author xiaosong
  */
-class DraggableViewCallback extends ViewDragHelper.Callback {
+public class DraggableViewCallback extends ViewDragHelper.Callback {
 
     private static final String TAG = "DraggableViewCallback";
 
