@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:background="@color/colorPrimary">>
+            android:background="@color/colorPrimary">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -30,59 +30,70 @@
                 <com.xiaosong.draggableview.HorizontalDraggableView
                     android:id="@+id/drag_view_hor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:visibility="visible">
+                    android:layout_height="match_parent">
 
-                    <View
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-                    <!--顶部播放器部分-->
-                    <RelativeLayout
-                        android:id="@+id/fl_video"
+                    <LinearLayout
+                        android:id="@+id/lv_video"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:background="@color/colorBlack">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/colorPrimary">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
                             android:layout_centerInParent="true"
-                            android:text="播放器控件" />
-                    </RelativeLayout>
+                            android:text="播放器控件"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:background="@color/colorBlack"/>
 
-                    <View
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:text="底部列表部分"
+                            android:background="@color/colorAccent"
+                            android:textColor="@android:color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:text="底部列表部分"
+                            android:background="@color/colorBlue"
+                            android:textColor="@android:color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:text="底部列表部分"
+                            android:background="@color/colorAccent"
+                            android:textColor="@android:color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:text="底部列表部分"
+                            android:background="@color/colorBlue"
+                            android:textColor="@android:color/white"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                 </com.xiaosong.draggableview.HorizontalDraggableView>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:gravity="center"
-                    android:text="底部列表部分" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:gravity="center"
-                    android:text="底部列表部分" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:gravity="center"
-                    android:text="底部列表部分" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:gravity="center"
-                    android:text="底部列表部分" />
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </com.xiaosong.draggableview.DraggableScrollView>

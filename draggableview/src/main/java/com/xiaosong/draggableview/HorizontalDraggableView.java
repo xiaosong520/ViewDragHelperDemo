@@ -64,8 +64,8 @@ public class HorizontalDraggableView extends FrameLayout {
 
     private void init() {
         mScroller = new Scroller(mContext);
-        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
-        screenHeight = dm.heightPixels;
+   /*     DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        screenHeight = dm.heightPixels;*/
 
         //获取系统移动距离阈值
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
@@ -303,6 +303,10 @@ public class HorizontalDraggableView extends FrameLayout {
         }
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -313,7 +317,7 @@ public class HorizontalDraggableView extends FrameLayout {
 
             //可见的区域，才显示
             if (child.getVisibility() != View.GONE)
-                child.layout(startLeft, startTop, startLeft + getWidth(), startTop + screenHeight);
+                child.layout(startLeft, startTop, startLeft + getWidth(), startTop + getHeight());
 
             startLeft = startLeft + getWidth(); //校准每个子View的起始布局位置
             //三个子视图的在屏幕中的分布如下 [ -Width , 0] / [0, Width] / [Width, 2*Width]

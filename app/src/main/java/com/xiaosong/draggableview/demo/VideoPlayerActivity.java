@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.xiaosong.draggableview.DraggableScrollView;
@@ -18,20 +17,21 @@ import butterknife.ButterKnife;
 
 
 /**
- * 垂直方向利用DragHelper，水平方向自行处理触摸事件的示例Activity。
+ * 垂直方向利用DragHelper，水平方向自行处理触摸事件 的示例Activity。
  * 用于解决用一个DraggableView不方便分发给子控件触摸事件的问题。
  */
 public class VideoPlayerActivity extends AppCompatActivity implements DraggableListener, DraggableScrollView.ScrollListener {
 
     private static final String TAG = "VideoPlayerActivity";
-    @BindView(R.id.fl_video)
-    RelativeLayout flVideo;
+
     @BindView(R.id.drag_view_hor)
     HorizontalDraggableView dragViewHor;
     @BindView(R.id.scroll_view)
     DraggableScrollView scrollView;
     @BindView(R.id.drag_view_vertical)
     VerticalDraggableView dragViewVertical;
+    @BindView(R.id.lv_video)
+    LinearLayout lvVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
 
     @Override
     public void onBackgroundChanged(int top) {
-        int newAlpha = 255 - (int) (255 * ((float) top / (float) flVideo.getRootView().getHeight()));
+        int newAlpha = 255 - (int) (255 * ((float) top / (float) lvVideo.getRootView().getHeight()));
 
         if (newAlpha == 255) {
             dragViewVertical.setBackgroundResource(R.mipmap.bg_gauss_blur);
