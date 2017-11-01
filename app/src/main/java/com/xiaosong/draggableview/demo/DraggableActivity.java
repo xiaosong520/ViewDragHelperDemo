@@ -14,6 +14,10 @@ import com.xiaosong.draggableview.interfaces.DraggableListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ * 利用ViewDragHelper实现（下拉拖拽关闭） 以及 （水平拖拽切换） 的功能。
+ */
 public class DraggableActivity extends AppCompatActivity implements DraggableListener, DraggableScrollView.ScrollListener {
 
     private static final String TAG = "DraggableActivity";

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorTransparent">
 
-    <!--竖直拖拽-->
+    <!-- 竖直 + 水平拖拽 -->
     <com.xiaosong.draggableview.DraggableView
         android:id="@+id/drag_view"
         android:layout_width="match_parent"
