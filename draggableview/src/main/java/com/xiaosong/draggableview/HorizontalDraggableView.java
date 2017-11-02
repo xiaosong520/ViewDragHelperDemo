@@ -28,7 +28,6 @@ public class HorizontalDraggableView extends FrameLayout {
     private int currentScreen = 0;  //当前屏
 
     private Scroller mScroller = null;
-    //    private int screenHeight;
     private DraggableListener listener;
 
     private static final int TOUCH_STATE_REST = 0;
@@ -121,7 +120,6 @@ public class HorizontalDraggableView extends FrameLayout {
         if (isFullScreen) {
             return false;
         }
-//        CLog.d(TAG, "onTouchEvent:"+ event.getAction());
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
@@ -204,7 +202,6 @@ public class HorizontalDraggableView extends FrameLayout {
         } else {
             destScreen = (getScrollX() + getWidth() / 3) < 0 ? -1 : 0;
         }
-//        Log.e(TAG, "snapToDestination:" + destScreen);
         snapToScreen(destScreen);
     }
 
@@ -249,10 +246,10 @@ public class HorizontalDraggableView extends FrameLayout {
 //        Log.d(TAG, "onTouchEvent  ACTION_UP--->  Scroll To Screen:" + currentScreen);
         if (isFirst && currentScreen == -1) {
             onRest();
-//            SkeletonDI.appCmp().toast().toast(mContext,  "这已经是最新的数据了");
+
         } else if (isLast && currentScreen == 1) {
             onRest();
-//            SkeletonDI.appCmp().toast().toast(mContext,  "这已经是最后一条数据了");
+
         } else {
             int dx = currentScreen * getWidth() - getScrollX();
             mScroller.startScroll(getScrollX(), 0, dx, 0, Math.abs(dx));
