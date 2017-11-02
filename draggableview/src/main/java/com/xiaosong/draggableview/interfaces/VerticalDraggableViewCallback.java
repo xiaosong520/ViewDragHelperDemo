@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.xiaosong.draggableview.VerticalDraggableView;
+import com.xiaosong.draggableview.utils.DisplayMetricsUtils;
 
 
 /**
@@ -17,7 +18,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
 
     private static final String TAG = "VerticalCallback";
 
-    private static float Y_MIN_DISTANCE = 200;//竖直方向关闭最小值 px
+    private static float Y_MIN_DISTANCE; //竖直方向关闭最小值 px
 
     private VerticalDraggableView verticalDraggableView;
 
@@ -25,7 +26,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
 
     public VerticalDraggableViewCallback(VerticalDraggableView verticalDraggableView) {
         this.verticalDraggableView = verticalDraggableView;
-//        Y_MIN_DISTANCE = DisplayMetricsUtils.getScreenHeightPixels((Activity) verticalDraggableView.getContext())/3;
+        Y_MIN_DISTANCE = DisplayMetricsUtils.getScreenHeightPixels((Activity) verticalDraggableView.getContext())/3;
     }
 
     /**
@@ -96,9 +97,9 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
     /**
      * 计算竖直方向的滑动
      */
-    private void triggerOnReleaseActionsWhileVerticalDrag(float yVel) {
+    private void triggerOnReleaseActionsWhileVerticalDrag(float moveY) {
 
-        if (yVel > 0 && yVel >= Y_MIN_DISTANCE) {
+        if (moveY > 0 && moveY >= Y_MIN_DISTANCE) {
             verticalDraggableView.closeToBottom();
             Log.d(TAG, "ReleaseVerticalDrag"+", closeToBottom" );
         } else {

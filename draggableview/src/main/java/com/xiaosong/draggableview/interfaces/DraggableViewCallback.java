@@ -1,10 +1,12 @@
 package com.xiaosong.draggableview.interfaces;
 
+import android.app.Activity;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
 import android.view.View;
 
 import com.xiaosong.draggableview.DraggableView;
+import com.xiaosong.draggableview.utils.DisplayMetricsUtils;
 
 
 /**
@@ -16,16 +18,17 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
 
     private static final String TAG = "DraggableViewCallback";
 
-    private static float X_MIN_DISTANCE = 200;//水平方向关闭最小值 px
-    private static float Y_MIN_DISTANCE = 200;//竖直方向关闭最小值 px
+    private static float X_MIN_DISTANCE; //水平方向关闭最小值 px
+    private static float Y_MIN_DISTANCE; //竖直方向关闭最小值 px
 
     private DraggableView draggableView;
+    private int rangeY;
 
 
     public DraggableViewCallback(DraggableView draggableView) {
         this.draggableView = draggableView;
-//        X_MIN_DISTANCE = DisplayMetricsUtils.getScreenWidthPixels((Activity) draggableView.getContext())/3;
-//        Y_MIN_DISTANCE = DisplayMetricsUtils.getScreenHeightPixels((Activity) draggableView.getContext())/3;
+        X_MIN_DISTANCE = DisplayMetricsUtils.getScreenWidthPixels((Activity) draggableView.getContext())/3;
+        Y_MIN_DISTANCE = DisplayMetricsUtils.getScreenHeightPixels((Activity) draggableView.getContext())/3;
     }
 
     /**
@@ -54,7 +57,8 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
                 || draggableView.Move_Way.equals(draggableView.MOVE_RIGHT)) {
             return 0;
         }
-        return Math.max(top, 0);
+        rangeY += dy;
+        return Math.max(rangeY, 0);
     }
 
     /**
@@ -85,7 +89,7 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
     public void onViewReleased(View releasedChild, float xVel, float yVel) {
         super.onViewReleased(releasedChild, xVel, yVel);
         //Log.d(TAG, "onViewReleased" + "xVel:" + xVel + ", yVel:" + yVel);
-
+        rangeY = 0;
         int top = releasedChild.getTop(); //获取子控件Y值
         int left = releasedChild.getLeft(); //获取子控件X值
 
@@ -113,11 +117,11 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
     /**
      * 计算竖直方向的滑动
      */
-    private void triggerOnReleaseActionsWhileVerticalDrag(float yVel) {
-        //Log.d(TAG, "ReleaseVerticalDrag"+", yVel：" + yVel);
-        if (yVel < 0 && yVel <= -Y_MIN_DISTANCE) {
+    private void triggerOnReleaseActionsWhileVerticalDrag(float moveY) {
+        //Log.d(TAG, "ReleaseVerticalDrag"+", moveY：" + moveY);
+        if (moveY < 0 && moveY <= -Y_MIN_DISTANCE) {
             draggableView.onReset();
-        } else if (yVel > 0 && yVel >= Y_MIN_DISTANCE) {
+        } else if (moveY > 0 && moveY >= Y_MIN_DISTANCE) {
             draggableView.closeToBottom();
         } else {
             draggableView.onReset();
@@ -127,11 +131,11 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
     /**
      * 计算水平方向的滑动
      */
-    private void triggerOnReleaseActionsWhileHorizontalDrag(float xVel) {
-//        Log.d(TAG, "ReleaseHorizontalDrag"+", xVel：" + xVel);
-        if (xVel < 0 && xVel <= -X_MIN_DISTANCE) {
+    private void triggerOnReleaseActionsWhileHorizontalDrag(float moveX) {
+//        Log.d(TAG, "ReleaseHorizontalDrag"+", moveX：" + moveX);
+        if (moveX < 0 && moveX <= -X_MIN_DISTANCE) {
             draggableView.closeToLeft();
-        } else if (xVel > 0 && xVel >= X_MIN_DISTANCE) {
+        } else if (moveX > 0 && moveX >= X_MIN_DISTANCE) {
             draggableView.closeToRight();
         } else {
             draggableView.onReset();

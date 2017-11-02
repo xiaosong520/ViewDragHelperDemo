@@ -56,9 +56,10 @@ public class DraggableActivity extends AppCompatActivity implements DraggableLis
 
     @Override
     public void onClosedToLeft() {
-        Toast.makeText(this, "向左滑动", Toast.LENGTH_SHORT).show();
+
         new Handler().postDelayed(new Runnable() {
             public void run() {
+                Toast.makeText(DraggableActivity.this, "向左滑动", Toast.LENGTH_SHORT).show();
                 dragView.show();
             }
         }, 500);
@@ -66,9 +67,10 @@ public class DraggableActivity extends AppCompatActivity implements DraggableLis
 
     @Override
     public void onClosedToRight() {
-        Toast.makeText(this, "向左滑动", Toast.LENGTH_SHORT).show();
+
         new Handler().postDelayed(new Runnable() {
             public void run() {
+                Toast.makeText(DraggableActivity.this, "向右滑动", Toast.LENGTH_SHORT).show();
                 dragView.show();
             }
         }, 500);
