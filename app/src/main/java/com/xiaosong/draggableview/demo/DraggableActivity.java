@@ -67,7 +67,7 @@ public class DraggableActivity extends AppCompatActivity implements DraggableLis
 
     @Override
     public void onClosedToRight() {
-        Toast.makeText(DraggableActivity.this, "向右滑动，加载上一个视频...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(DraggableActivity.this, "向右切换，加载上一个视频...", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
