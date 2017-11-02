@@ -57,6 +57,7 @@ public class VerticalDraggableView extends LinearLayout {
     public final String MOVE_LEFT = "LEFT";
     public final String MOVE_RIGHT = "RIGHT";
     public String Move_Way = MOVE_TOP;
+    private boolean canDoublePointer = false;
 
 
     public VerticalDraggableView(Context context) {
@@ -164,14 +165,14 @@ public class VerticalDraggableView extends LinearLayout {
             return false;
         }
 
-        if (ev.getPointerCount() > 1) { //屏蔽多指操作
+        if (!canDoublePointer && ev.getPointerCount() > 1) { //屏蔽多指操作
             Log.e(TAG, "onInterceptTouchEvent, getPointerCount > 1 （多点触控，屏蔽掉）");
             mDragView.dispatchTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
             viewDragHelper.cancel();
             return false;
         }
-
-        switch (ev.getAction()) {
+        int action = MotionEventCompat.getActionMasked(ev);
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
 
                 mDownX = ev.getX();
@@ -250,6 +251,7 @@ public class VerticalDraggableView extends LinearLayout {
                 boolean isDragDown = mDragView.getTop() > 0;
                 if (!isFullScreen && (!isForbidden() || isDragDown)) {
                     viewDragHelper.processTouchEvent(ev);
+                    Log.d(TAG, "processTouchEvent: "+ev.getAction());
                 }
                 break;
         }
@@ -420,9 +422,15 @@ public class VerticalDraggableView extends LinearLayout {
      *
      * @param top
      */
-    private void notifyBackgroundChangedListener(int top) {
+    private void notifyBackgroundChangedListener(final int top) {
         if (listener != null) {
-            listener.onBackgroundChanged(top);
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onBackgroundChanged(top);
+                }
+            });
+
         }
     }
 
@@ -453,4 +461,7 @@ public class VerticalDraggableView extends LinearLayout {
         this.isFullScreen = fullScreen;
     }
 
+    public void setCanDoublePointer(boolean canDoublePointer) {
+        this.canDoublePointer = canDoublePointer;
+    }
 }

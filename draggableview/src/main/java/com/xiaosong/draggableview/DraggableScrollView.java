@@ -36,11 +36,12 @@ public class DraggableScrollView extends ScrollView {
     }
 
 
+
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent ev) {
         super.onInterceptTouchEvent(ev);//继承父类方法，让它可以实现Scrollview的滑动
 
-        if (isFullScreen) {//全屏状态，不滑动ScrollView
+        if (isFullScreen){//全屏状态，不滑动ScrollView
             return false;
         }
 
@@ -57,10 +58,10 @@ public class DraggableScrollView extends ScrollView {
             case MotionEvent.ACTION_MOVE:
 
                 if (mTouchState == TOUCH_STATE_HORIZONTAL_SCROLLING) {
-                    Log.i(TAG, "mTouchState：水平已判定");
+                    Log.d(TAG, "mTouchState：水平已判定");
                     intercept = false;
                 } else if (mTouchState == TOUCH_STATE_VERTICAL_SCROLLING) {
-                    Log.i(TAG, "mTouchState：竖直已判定");
+                    Log.d(TAG, "mTouchState：竖直已判定");
                     intercept = true;
                 } else {
 
@@ -75,14 +76,14 @@ public class DraggableScrollView extends ScrollView {
                     boolean yMoved = (xDiff < 2 * yDiff);
 
                     if (xMoved) {
-                        Log.i(TAG, "mTouchState：水平");
-                        if (mTouchSlop < yDiff) {
+                        Log.d(TAG, "mTouchState：水平");
+                        if (mTouchSlop <yDiff){
                             mTouchState = TOUCH_STATE_HORIZONTAL_SCROLLING;
                         }
 
-                    } else if (yMoved) {
-                        Log.i(TAG, "mTouchState：竖直");
-                        if (mTouchSlop < yDiff) {
+                    }else if (yMoved) {
+                        Log.d(TAG, "mTouchState：竖直");
+                        if (mTouchSlop <yDiff){
                             mTouchState = TOUCH_STATE_VERTICAL_SCROLLING;
                         }
                     }
@@ -91,7 +92,7 @@ public class DraggableScrollView extends ScrollView {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 // Release the state.
-                Log.i(TAG, "onInterceptTouchEvent：ACTION_UP");
+                Log.d(TAG, "onInterceptTouchEvent：ACTION_UP or ACTION_CANCEL ");
                 mTouchState = TOUCH_STATE_REST;
                 intercept = false;
                 break;
@@ -99,7 +100,7 @@ public class DraggableScrollView extends ScrollView {
                 break;
         }
 
-        Log.i("MultiScroll-->", "intercept：" + intercept);
+        Log.d("DraggableScrollView-->", "intercept：" + intercept);
         return intercept && !isForbidden();
     }
 
@@ -108,17 +109,11 @@ public class DraggableScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (t <= 0) {
-            if (listener != null) {
-                listener.isOnTop(true);
-            }
+            listener.isOnTop(true);
         } else {
-            if (listener != null) {
-                listener.isOnTop(false);
-            }
+            listener.isOnTop(false);
         }
-        if (listener != null) {
-            listener.onScrollChanged(t);
-        }
+        listener.onScrollChanged(t);
     }
 
     private boolean isForbidden() {

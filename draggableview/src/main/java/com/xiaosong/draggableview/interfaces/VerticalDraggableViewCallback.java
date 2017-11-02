@@ -1,5 +1,6 @@
 package com.xiaosong.draggableview.interfaces;
 
+import android.app.Activity;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
 import android.view.View;
@@ -20,10 +21,12 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
 
     private VerticalDraggableView verticalDraggableView;
 
+    private int rangeY;
 
     public VerticalDraggableViewCallback(VerticalDraggableView verticalDraggableView) {
         this.verticalDraggableView = verticalDraggableView;
-        }
+//        Y_MIN_DISTANCE = DisplayMetricsUtils.getScreenHeightPixels((Activity) verticalDraggableView.getContext())/3;
+    }
 
     /**
      * 子控件位置改变时触发（包括X和Y轴方向）
@@ -46,9 +49,12 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
         //水平滑动时触发了竖直方向，屏蔽掉
         if (verticalDraggableView.Move_Way.equals(verticalDraggableView.MOVE_LEFT)
                 || verticalDraggableView.Move_Way.equals(verticalDraggableView.MOVE_RIGHT)) {
+           Log.d(TAG," clampViewPositionVertical, return 0");
             return 0;
         }
-        return Math.max(top, 0);
+        Log.d(TAG," clampViewPositionVertical, return "+top);
+        rangeY += dy;
+        return Math.max(rangeY, 0);
     }
 
     /**
@@ -57,6 +63,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
     @Override
     public int clampViewPositionHorizontal(View child, int left, int dx) {
         //屏蔽掉水平方向
+        Log.d(TAG," clampViewPositionHorizontal, return 0");
         return 0;
     }
 
@@ -71,6 +78,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
     @Override
     public void onViewReleased(View releasedChild, float xVel, float yVel) {
         super.onViewReleased(releasedChild, xVel, yVel);
+        rangeY = 0;
         Log.d(TAG,"onViewReleased");
         int top = releasedChild.getTop(); //获取子控件Y值
         int left = releasedChild.getLeft(); //获取子控件X值

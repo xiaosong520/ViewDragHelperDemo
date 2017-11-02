@@ -1,9 +1,12 @@
 package com.xiaosong.draggableview.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -14,10 +17,12 @@ import com.xiaosong.draggableview.interfaces.DraggableListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
- * 垂直方向利用DragHelper，水平方向自行处理触摸事件 的示例Activity。
+ * 分开两个控件来处理事件
+ * 垂直方向利用DragHelper，水平方向自行处理。
  * 用于解决用一个DraggableView不方便分发给子控件触摸事件的问题。
  */
 public class VideoPlayerActivity extends AppCompatActivity implements DraggableListener, DraggableScrollView.ScrollListener {
@@ -50,6 +55,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
         dragViewHor.setLast(false);
     }
 
+    @OnClick(R.id.tv_video_content)
+    public void onClick(View view) {
+        Toast.makeText(this,"点击视频内容",Toast.LENGTH_SHORT).show();
+    }
+
+
     @Override
     public void onClosedToBottom() {
         Toast.makeText(this, "关闭页面", Toast.LENGTH_SHORT).show();
@@ -74,7 +85,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
 
     @Override
     public void onClosedToRight() {
-        Toast.makeText(this, "向左滑动", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "向右滑动", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 dragViewHor.show();
@@ -84,6 +95,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements DraggableL
 
     @Override
     public void onBackgroundChanged(int top) {
+        Log.d(TAG,"onBackgroundChanged-top:"+top);
         int newAlpha = 255 - (int) (255 * ((float) top / (float) lvVideo.getRootView().getHeight()));
 
         if (newAlpha == 255) {

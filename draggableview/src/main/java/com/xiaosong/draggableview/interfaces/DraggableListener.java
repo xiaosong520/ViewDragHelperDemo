@@ -18,7 +18,7 @@ package com.xiaosong.draggableview.interfaces;
 /**
  * 拖拽回调接口
  *
- * @author zengsong
+ * @author xiaosong
  */
 public interface DraggableListener {
 

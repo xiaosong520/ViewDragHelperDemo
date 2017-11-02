@@ -51,9 +51,6 @@ public class DraggableView extends LinearLayout {
     private boolean isNeedInterceptHorizontal = false; //是否需要拦截左右滑动
     private double mDownX = 0;
     private double mDownY = 0;
-
-    private int MIN_DISTANCE = 30;//判断滑动方向的阈值
-
     private double mMoveDistance = 0;
     private boolean isJudgeWay = false; //是否已判定滑动方向
 
@@ -212,7 +209,7 @@ public class DraggableView extends LinearLayout {
 
                     //从按下 ，到手指当前位置的移动距离 = 根号(X^2 + Y^2)
                     mMoveDistance = Math.sqrt(Math.pow((Math.abs(ev.getX()) - Math.abs(mDownX)), 2) + Math.pow(((Math.abs(ev.getY()) - Math.abs(mDownY))), 2));
-                    if (mMoveDistance >= MIN_DISTANCE) {
+                    if (mMoveDistance >= viewDragHelper.getTouchSlop()) {
                         isJudgeWay = true;
                     }
                 }

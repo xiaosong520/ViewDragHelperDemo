@@ -28,15 +28,12 @@ public class HorizontalDraggableView extends FrameLayout {
     private int currentScreen = 0;  //当前屏
 
     private Scroller mScroller = null;
-    private int screenHeight;
-
-
+    //    private int screenHeight;
     private DraggableListener listener;
 
     private static final int TOUCH_STATE_REST = 0;
     private static final int TOUCH_STATE_SCROLLING = 1;
     private int mTouchState = TOUCH_STATE_REST;
-
 
     public static int SNAP_VELOCITY = 3000;//Fling快滑速度阈值
     private int mTouchSlop = 0;
@@ -64,7 +61,7 @@ public class HorizontalDraggableView extends FrameLayout {
 
     private void init() {
         mScroller = new Scroller(mContext);
-   /*     DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+     /*   DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
         screenHeight = dm.heightPixels;*/
 
         //获取系统移动距离阈值
@@ -105,7 +102,7 @@ public class HorizontalDraggableView extends FrameLayout {
                 final int xDiff = (int) Math.abs(mLastMotionX - x);
                 final int yDiff = (int) Math.abs(mLastMotionY - y);
 
-                if (xDiff > yDiff && xDiff >= mTouchSlop) {
+                if (xDiff > yDiff && xDiff>= mTouchSlop) {
                     mTouchState = TOUCH_STATE_SCROLLING;
                 }
                 break;
@@ -117,16 +114,17 @@ public class HorizontalDraggableView extends FrameLayout {
                 mTouchState = TOUCH_STATE_REST;
                 break;
         }
-        Log.d(TAG, "mTouchState=" + mTouchState + ", isFullScreen=" + isFullScreen + ", TouchEvent=" + ev.getAction());
+        Log.d(TAG, "mTouchState=" + mTouchState+", isFullScreen=" + isFullScreen+", TouchEvent=" + ev.getAction());
         //在滑动状态 && 非全屏 && 允许拦截（子控件不需要消费事件）
         return mTouchState != TOUCH_STATE_REST && !isFullScreen && super.onInterceptTouchEvent(ev);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
-        if (isFullScreen) {
+        if (isFullScreen){
             return false;
         }
+//        CLog.d(TAG, "onTouchEvent:"+ event.getAction());
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
@@ -151,7 +149,9 @@ public class HorizontalDraggableView extends FrameLayout {
                     scrollBy(diffX, 0);
                     mLastMotionX = x;
                     mMoveDistance = mMoveDistance + diffX;
+                    Log.e(TAG, "ACTION_MOVE," + "diffX:"+diffX);
                 }
+
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
@@ -160,7 +160,7 @@ public class HorizontalDraggableView extends FrameLayout {
                     velocityTracker.computeCurrentVelocity(1000);
 
                     int velocityX = (int) velocityTracker.getXVelocity();
-
+//
                     //快速向右滑屏，马上进行切屏处理
                     if (velocityX > SNAP_VELOCITY) {
                         // Fling enough to move left
@@ -189,22 +189,20 @@ public class HorizontalDraggableView extends FrameLayout {
             default:
                 break;
         }
+
         return true;
     }
 
 
-    /**
-     * 缓慢移动，判断是否超过1/3屏幕，超过切屏，否则还原。
-     *
-     * @param isToLeft 左右方向
-     */
-    private void snapToDestination(boolean isToLeft) {
+    private void snapToDestination(boolean isToLeft) {  //缓慢移动，超过切屏，否则还原
+
         int destScreen;
         if (isToLeft) {
             destScreen = (getScrollX() + getWidth() * 2 / 3) > getWidth() ? 1 : 0;
         } else {
             destScreen = (getScrollX() + getWidth() / 3) < 0 ? -1 : 0;
         }
+//        Log.e(TAG, "snapToDestination:" + destScreen);
         snapToScreen(destScreen);
     }
 
@@ -213,25 +211,25 @@ public class HorizontalDraggableView extends FrameLayout {
      * 还原状态
      */
     public void onRest() {
-        Log.d(TAG, "onRest()");
+        Log.d(TAG,"onRest");
         currentScreen = 0;
-        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, Math.abs(getScrollX()));
+        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0,  Math.abs(getScrollX()));
     }
 
     /**
      * 显示
      */
-    public void show() {
+    public void show(){
         currentScreen = 0;
-        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, 0);
+        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0,  0);
 
         //渐显动画
-        ValueAnimator alphaAnimator = ValueAnimator.ofFloat(0, 1.0f);
+        ValueAnimator  alphaAnimator = ValueAnimator.ofFloat(0, 1.0f);
         alphaAnimator.setDuration(100);
         alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                HorizontalDraggableView.this.setAlpha((float) valueAnimator.getAnimatedValue());
+            public void onAnimationUpdate(ValueAnimator animation) {
+                setAlpha((float) animation.getAnimatedValue());
             }
         });
         alphaAnimator.start();
@@ -249,8 +247,10 @@ public class HorizontalDraggableView extends FrameLayout {
 //        Log.d(TAG, "onTouchEvent  ACTION_UP--->  Scroll To Screen:" + currentScreen);
         if (isFirst && currentScreen == -1) {
             onRest();
+//            SkeletonDI.appCmp().toast().toast(mContext,  "这已经是最新的数据了");
         } else if (isLast && currentScreen == 1) {
             onRest();
+//            SkeletonDI.appCmp().toast().toast(mContext,  "这已经是最后一条数据了");
         } else {
             int dx = currentScreen * getWidth() - getScrollX();
             mScroller.startScroll(getScrollX(), 0, dx, 0, Math.abs(dx));
@@ -259,9 +259,9 @@ public class HorizontalDraggableView extends FrameLayout {
                 @Override
                 public void run() {
                     if (whichScreen == 1) {
-                        HorizontalDraggableView.this.notifyCloseToLeftListener();
+                        notifyCloseToLeftListener();
                     } else if (whichScreen == -1) {
-                        HorizontalDraggableView.this.notifyCloseToRightListener();
+                        notifyCloseToRightListener();
                     }
                 }
             }, Math.abs(dx));
@@ -278,15 +278,12 @@ public class HorizontalDraggableView extends FrameLayout {
     }
 
     /**
-     * 设置是否为第一条数据
+     * 设置是否为边界值
      */
     public void setFirst(boolean isFirst) {
         this.isFirst = isFirst;
     }
 
-    /**
-     * 设置是否为最后一条数据
-     */
     public void setLast(boolean isLast) {
         this.isLast = isLast;
     }
@@ -303,10 +300,6 @@ public class HorizontalDraggableView extends FrameLayout {
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
