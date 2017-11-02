@@ -61,9 +61,6 @@ public class HorizontalDraggableView extends FrameLayout {
 
     private void init() {
         mScroller = new Scroller(mContext);
-     /*   DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
-        screenHeight = dm.heightPixels;*/
-
         //获取系统移动距离阈值
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
@@ -102,7 +99,7 @@ public class HorizontalDraggableView extends FrameLayout {
                 final int xDiff = (int) Math.abs(mLastMotionX - x);
                 final int yDiff = (int) Math.abs(mLastMotionY - y);
 
-                if (xDiff > yDiff && xDiff>= mTouchSlop) {
+                if (xDiff > yDiff && xDiff >= mTouchSlop) {
                     mTouchState = TOUCH_STATE_SCROLLING;
                 }
                 break;
@@ -114,14 +111,14 @@ public class HorizontalDraggableView extends FrameLayout {
                 mTouchState = TOUCH_STATE_REST;
                 break;
         }
-        Log.d(TAG, "mTouchState=" + mTouchState+", isFullScreen=" + isFullScreen+", TouchEvent=" + ev.getAction());
+        Log.d(TAG, "mTouchState=" + mTouchState + ", isFullScreen=" + isFullScreen + ", TouchEvent=" + ev.getAction());
         //在滑动状态 && 非全屏 && 允许拦截（子控件不需要消费事件）
         return mTouchState != TOUCH_STATE_REST && !isFullScreen && super.onInterceptTouchEvent(ev);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
-        if (isFullScreen){
+        if (isFullScreen) {
             return false;
         }
 //        CLog.d(TAG, "onTouchEvent:"+ event.getAction());
@@ -132,7 +129,7 @@ public class HorizontalDraggableView extends FrameLayout {
 
         //手指x轴位置
         float x = event.getX();
-
+        float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //如果屏幕的动画还没结束就按下了，就结束该动画
@@ -142,14 +139,19 @@ public class HorizontalDraggableView extends FrameLayout {
                     }
                 }
                 mLastMotionX = x;
+                mLastMotionY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (currentScreen == 0) {
                     int diffX = (int) (mLastMotionX - x);
-                    scrollBy(diffX, 0);
+                    int diffY = (int) (mLastMotionY - y);
+                    if (2 * Math.abs(diffY) < Math.abs(diffX)) {//X值大于两倍Y值，才认为是水平滑动
+                        scrollBy(diffX, 0);
+                    }
                     mLastMotionX = x;
+                    mLastMotionY = y;
                     mMoveDistance = mMoveDistance + diffX;
-                    Log.e(TAG, "ACTION_MOVE," + "diffX:"+diffX);
+                    Log.e(TAG, "ACTION_MOVE," + "diffX:" + diffX);
                 }
 
                 break;
@@ -211,20 +213,20 @@ public class HorizontalDraggableView extends FrameLayout {
      * 还原状态
      */
     public void onRest() {
-        Log.d(TAG,"onRest");
+        Log.d(TAG, "onRest");
         currentScreen = 0;
-        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0,  Math.abs(getScrollX()));
+        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, Math.abs(getScrollX()));
     }
 
     /**
      * 显示
      */
-    public void show(){
+    public void show() {
         currentScreen = 0;
-        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0,  0);
+        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, 0);
 
         //渐显动画
-        ValueAnimator  alphaAnimator = ValueAnimator.ofFloat(0, 1.0f);
+        ValueAnimator alphaAnimator = ValueAnimator.ofFloat(0, 1.0f);
         alphaAnimator.setDuration(100);
         alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
