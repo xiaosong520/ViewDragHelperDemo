@@ -22,7 +22,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
 
     private VerticalDraggableView verticalDraggableView;
 
-    private int rangeY;
+    private int mRangeY;
 
     public VerticalDraggableViewCallback(VerticalDraggableView verticalDraggableView) {
         this.verticalDraggableView = verticalDraggableView;
@@ -53,9 +53,10 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
            Log.d(TAG," clampViewPositionVertical, return 0");
             return 0;
         }
-        Log.d(TAG," clampViewPositionVertical, return "+top);
-        rangeY += dy;
-        return Math.max(rangeY, 0);
+        mRangeY += dy;
+        Log.d(TAG," clampViewPositionVertical, top： "+top);
+        Log.d(TAG," clampViewPositionVertical, mRangeY： "+ mRangeY);
+        return Math.max(mRangeY, 0);
     }
 
     /**
@@ -79,7 +80,7 @@ public class VerticalDraggableViewCallback extends ViewDragHelper.Callback {
     @Override
     public void onViewReleased(View releasedChild, float xVel, float yVel) {
         super.onViewReleased(releasedChild, xVel, yVel);
-        rangeY = 0;
+        mRangeY = 0;
         Log.d(TAG,"onViewReleased");
         int top = releasedChild.getTop(); //获取子控件Y值
         int left = releasedChild.getLeft(); //获取子控件X值

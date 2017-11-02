@@ -318,7 +318,7 @@ public class DraggableView extends LinearLayout {
     public void show() {
 
         //重置控件位置到顶部
-        mDragView.setVisibility(View.INVISIBLE);
+        mDragView.setAlpha(0.0f);
         if (viewDragHelper.smoothSlideViewTo(mDragView, 0, 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -326,9 +326,13 @@ public class DraggableView extends LinearLayout {
         //等动画结束再显示出来
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                mDragView.setVisibility(VISIBLE);
+                AlphaAnimation showAnimation = new AlphaAnimation(0.0f, 1.0f);
+                showAnimation.setDuration(500);
+                showAnimation.setFillAfter(true);
+                mDragView.startAnimation(showAnimation);
+                mDragView.setAlpha(1.0f);
             }
-        }, 400);
+        }, 500);
 
     }
 

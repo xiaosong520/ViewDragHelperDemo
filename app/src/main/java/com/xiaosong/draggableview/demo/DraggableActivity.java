@@ -56,22 +56,23 @@ public class DraggableActivity extends AppCompatActivity implements DraggableLis
 
     @Override
     public void onClosedToLeft() {
-
+        Toast.makeText(DraggableActivity.this, "向左切换，加载下一个视频...", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                Toast.makeText(DraggableActivity.this, "向左滑动", Toast.LENGTH_SHORT).show();
                 dragView.show();
+                Toast.makeText(DraggableActivity.this, "视频数据加载完成", Toast.LENGTH_SHORT).show();
             }
         }, 500);
     }
 
     @Override
     public void onClosedToRight() {
+        Toast.makeText(DraggableActivity.this, "向右滑动，加载上一个视频...", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                Toast.makeText(DraggableActivity.this, "向右滑动", Toast.LENGTH_SHORT).show();
                 dragView.show();
+                Toast.makeText(DraggableActivity.this, "视频数据加载完成", Toast.LENGTH_SHORT).show();
             }
         }, 500);
     }

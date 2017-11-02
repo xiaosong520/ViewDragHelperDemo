@@ -149,7 +149,7 @@ public class HorizontalDraggableView extends FrameLayout {
                     mLastMotionX = x;
                     mLastMotionY = y;
                     mMoveDistance = mMoveDistance + diffX;
-                    Log.e(TAG, "ACTION_MOVE," + "diffX:" + diffX);
+                    Log.d(TAG, "onTouchEvent - ACTION_MOVE," + "diffX:" + diffX);
                 }
 
                 break;

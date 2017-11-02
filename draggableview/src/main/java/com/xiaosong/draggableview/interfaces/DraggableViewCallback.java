@@ -22,7 +22,7 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
     private static float Y_MIN_DISTANCE; //竖直方向关闭最小值 px
 
     private DraggableView draggableView;
-    private int rangeY;
+    private int mRangeY;
 
 
     public DraggableViewCallback(DraggableView draggableView) {
@@ -57,8 +57,8 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
                 || draggableView.Move_Way.equals(draggableView.MOVE_RIGHT)) {
             return 0;
         }
-        rangeY += dy;
-        return Math.max(rangeY, 0);
+        mRangeY += dy;
+        return Math.max(mRangeY, 0);
     }
 
     /**
@@ -89,7 +89,7 @@ public class DraggableViewCallback extends ViewDragHelper.Callback {
     public void onViewReleased(View releasedChild, float xVel, float yVel) {
         super.onViewReleased(releasedChild, xVel, yVel);
         //Log.d(TAG, "onViewReleased" + "xVel:" + xVel + ", yVel:" + yVel);
-        rangeY = 0;
+        mRangeY = 0;
         int top = releasedChild.getTop(); //获取子控件Y值
         int left = releasedChild.getLeft(); //获取子控件X值
 
