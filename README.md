@@ -1,8 +1,13 @@
 # ViewDragHelperDemo
 利用ViewDragHelper 打造一个可拖拽下拉关闭/左右切换的页面。
 
+QZone QQ控件的效果：
 ![QZone](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/QZone.gif)
+
+水平拖拽效果：
 ![效果图一](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/dragview_horizontal.gif)
+
+真机演示效果：
 ![效果图二](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/dragview_vertical.gif)
 
 ### 主要的功能点有如下几个：
