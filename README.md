@@ -5,11 +5,11 @@
 
 ![QZone](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/QZone.gif)
 
-#### 水平拖拽效果：
+#### demo拖拽下拉效果：
 
 ![效果图一](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/dragview_horizontal.gif)
 
-#### 真机演示效果：
+#### demo真机演示效果：
 
 ![效果图二](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/dragview_vertical.gif)
 
