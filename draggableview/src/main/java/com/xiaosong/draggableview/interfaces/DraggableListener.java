@@ -22,10 +22,6 @@ package com.xiaosong.draggableview.interfaces;
  */
 public interface DraggableListener {
 
-  /**
-   * Called when the view is maximized.
-   */
-//  void onMaximized();
 
   /**
    * Called when the view is minimized.
@@ -44,7 +40,7 @@ public interface DraggableListener {
 
 
   /**
-   * Called when the view is closed to the right.
+   * Called when the child view location changed
    * @param top
    */
   void onBackgroundChanged(int top);
