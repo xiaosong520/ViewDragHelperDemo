@@ -164,8 +164,7 @@ public class DraggableView extends LinearLayout {
     public boolean onTouchEvent(MotionEvent ev) {
 
         int index = MotionEventCompat.getActionIndex(ev);
-        activePointerId = MotionEventCompat.getPointerId(ev, index);
-//                Log.d("DraggableView", "TouchEvent-activePointerId:" + activePointerId);
+        activePointerId = ev.getPointerId(index);
         if (activePointerId == INVALID_POINTER) {
             return false;
         }
@@ -180,7 +179,6 @@ public class DraggableView extends LinearLayout {
                     viewDragHelper.processTouchEvent(ev);
                 }
                 mDragView.dispatchTouchEvent(ev);
-
                 Log.d(TAG, "onTouchEvent-DOWN:" + ",mDownX:" + mDownX + ",mDownY:" + mDownY);
                 break;
 
