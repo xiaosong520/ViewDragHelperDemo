@@ -22,7 +22,6 @@ package com.xiaosong.draggableview.interfaces;
  */
 public interface DraggableListener {
 
-
   /**
    * Called when the view is minimized.
    */
@@ -37,7 +36,6 @@ public interface DraggableListener {
    * Called when the view is closed to the right.
    */
   void onClosedToRight();
-
 
   /**
    * Called when the child view location changed

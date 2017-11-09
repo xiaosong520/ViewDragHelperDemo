@@ -166,7 +166,7 @@ public class VerticalDraggableView extends LinearLayout {
         }
 
         if (!canDoublePointer && ev.getPointerCount() > 1) { //屏蔽多指操作
-            Log.e(TAG, "onInterceptTouchEvent, getPointerCount > 1 （多点触控，屏蔽掉）");
+            Log.e(TAG, "onTouchEvent, getPointerCount > 1 （多点触控，屏蔽掉）");
             mDragView.dispatchTouchEvent(cloneMotionEventWithAction(ev, MotionEvent.ACTION_CANCEL));
             viewDragHelper.cancel();
             return false;
