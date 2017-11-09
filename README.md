@@ -5,7 +5,10 @@
 
 ![QZone](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/QZone.gif)
 
-#### demo拖拽下拉效果：
+#### MoMo播放页的效果：
+![Momo.gif](http://upload-images.jianshu.io/upload_images/4835249-de402c5058e44b6c.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+#### demo实现的拖拽效果：
 
 ![效果图一](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/dragview_horizontal.gif)
 
