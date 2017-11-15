@@ -1,7 +1,8 @@
 # ViewDragHelperDemo
 利用ViewDragHelper 打造一个可拖拽下拉关闭/左右切换的页面。
 
-[博客地址](http://blog.csdn.net/qq_22393017/article/details/78472492)
+博客地址： [ViewDragHelper （三）- 打造仿陌陌视频播放页（深入篇） ](http://blog.csdn.net/qq_22393017/article/details/78472492)
+
 #### QZone QQ空间的效果：
 
 ![QZone](https://github.com/xiaosong520/ViewDragHelperDemo/blob/master/Gif/QZone.gif)
